@@ -67,7 +67,7 @@ const page = () => {
             <p className="flex gap-1">
               Don't have an account?{" "}
               <Link className="text-red-500 underline" href={"/signUp"}>
-                SignUP
+                SignUp
               </Link>
             </p>
           </div>
