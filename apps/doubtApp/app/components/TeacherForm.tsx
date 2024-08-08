@@ -1,3 +1,4 @@
+import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -8,6 +9,27 @@ const TeacherForm = () => {
   const [name, setName] = useState("");
   const [employeeId, setEmployeeId] = useState("");
   const [department, setDepartment] = useState("");
+
+  const handleSubmit = async () => {
+    const data = {
+      email,
+      password,
+      name,
+      employeeId,
+      department,
+    };
+
+    const response = await axios.post(
+      "http://localhost:3001/api/teacher/signup",
+      data
+    );
+
+    if (response.status === 200) {
+      router.push("/");
+    } else {
+      alert("Something went wrong");
+    }
+  };
 
   const router = useRouter();
   return (
@@ -65,7 +87,7 @@ const TeacherForm = () => {
           type="button"
           className="mt-5 w-full rounded-md bg-black p-2 text-center font-semibold text-white"
           onClick={(e) => {
-            router.push("/signIn");
+            handleSubmit();
           }}
         >
           Get Started

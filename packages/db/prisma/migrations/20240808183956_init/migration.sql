@@ -14,7 +14,7 @@ CREATE TABLE "Student" (
     "semester" INTEGER NOT NULL,
     "section" TEXT NOT NULL,
     "depatment" "DeptType" NOT NULL,
-    "subjects" "SubjectType" NOT NULL,
+    "subjects" "SubjectType"[],
 
     CONSTRAINT "Student_pkey" PRIMARY KEY ("id")
 );

@@ -1,3 +1,4 @@
+import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -9,10 +10,34 @@ const StudentForm = () => {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [usn, setUsn] = useState("");
-  const [semester, setSemester] = useState("");
+  const [semester, setSemester] = useState(6);
   const [section, setSection] = useState("");
   const [department, setDepartment] = useState("");
   const [subjects, setSubjects] = useState<string[]>([]);
+
+  async function handleSubmit() {
+    const data = {
+      email,
+      password,
+      name,
+      usn,
+      semester,
+      section,
+      department,
+      subjects,
+    };
+
+    const response = await axios.post(
+      "http://localhost:3001/api/student/signup",
+      data
+    );
+
+    if (response.status === 200) {
+      router.push("/");
+    } else {
+      alert("Something went wrong");
+    }
+  }
 
   function handleChecks(e: React.ChangeEvent<HTMLInputElement>) {
     const { checked, name } = e.target;
@@ -56,7 +81,7 @@ const StudentForm = () => {
         <div>
           <label className=""> USN </label>
           <input
-            onChange={(e) => setUsn(e.target.value)}
+            onChange={(e) => setUsn(e.target.value.toUpperCase())}
             type="text"
             placeholder="USN"
             className="mt-2 h-12 w-full rounded-md bg-gray-100 px-3"
@@ -65,7 +90,7 @@ const StudentForm = () => {
         <div>
           <label className=""> Department </label>
           <input
-            onChange={(e) => setDepartment(e.target.value)}
+            onChange={(e) => setDepartment(e.target.value.toUpperCase())}
             type="text"
             placeholder="CSE"
             className="mt-2 h-12 w-full rounded-md bg-gray-100 px-3"
@@ -74,7 +99,7 @@ const StudentForm = () => {
         <div>
           <label className=""> Semester </label>
           <input
-            onChange={(e) => setSemester(e.target.value)}
+            onChange={(e) => setSemester(parseInt(e.target.value))}
             type="text"
             placeholder="6"
             className="mt-2 h-12 w-full rounded-md bg-gray-100 px-3"
@@ -137,7 +162,7 @@ const StudentForm = () => {
           type="button"
           className="mt-5 w-full rounded-md bg-black p-2 text-center font-semibold text-white"
           onClick={(e) => {
-            router.push("/signIn");
+            handleSubmit();
           }}
         >
           Get Started

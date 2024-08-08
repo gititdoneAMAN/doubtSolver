@@ -22,11 +22,12 @@ model Student {
   semester Int 
   section String 
   depatment DeptType
-  subjects SubjectType 
+  subjects SubjectType[]
 }
 
 model Teachers {
   id String @id @default(uuid())
+  employeeId String @unique
   email String @unique
   password String
   name String
