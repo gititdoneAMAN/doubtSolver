@@ -23,6 +23,7 @@ model Student {
   section String 
   depatment DeptType
   subjects SubjectType[]
+  doubtAsked Doubts[]
 }
 
 model Teachers {
@@ -31,7 +32,28 @@ model Teachers {
   email String @unique
   password String
   name String
-  depatment DeptType 
+  depatment DeptType
+  doubtSolved Doubts[]
+}
+
+model Doubts {
+  id String @id @default(uuid())
+  question String
+  content String
+  studentName String
+  teacherConcernedName String
+  Subject SubjectType
+  Department DeptType
+  Status Status @default(Pending)
+  studentId String
+  studentinfo Student @relation(fields: [studentId], references: [id])
+  empId String
+  teacherInfo Teachers @relation(fields: [empId], references: [id])
+}
+
+enum Status {
+  Pending
+  Complete
 }
 
 enum DeptType {
