@@ -67,9 +67,20 @@ export const authConfig = {
   ],
   secret: process.env.NEXTAUTH_SECRET || "NEXTAUTH_SECRET",
   callbacks: {
+    async jwt({ token, user }: any) {
+      // When the user is authenticated, include role and department in the token
+      if (user) {
+        token.role = user.role;
+        token.department = user.department;
+      }
+      return token;
+    },
     session: ({ session, token, user }: any) => {
       if (session.user) {
         session.user.id = token.sub;
+        session.user.role = token.role;
+        session.user.department = token.department;
+        // console.log("Department", session.user.department);
       }
       return session;
     },
