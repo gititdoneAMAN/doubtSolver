@@ -18,7 +18,7 @@ model Student {
   email String @unique
   password String 
   name String
-  usn String
+  usn String @unique
   semester Int 
   section String 
   depatment DeptType
@@ -46,9 +46,13 @@ model Doubts {
   Department DeptType
   Status Status @default(Pending)
   studentId String
-  studentinfo Student @relation(fields: [studentId], references: [id])
+  studentinfo Student @relation(fields: [studentId], references: [usn])
   empId String
-  teacherInfo Teachers @relation(fields: [empId], references: [id])
+  teacherInfo Teachers @relation(fields: [empId], references: [employeeId])
+  raisedAt DateTime 
+  teacherResponse String?
+  imageUrl String?
+  teacherImgUrl String?
 }
 
 enum Status {
