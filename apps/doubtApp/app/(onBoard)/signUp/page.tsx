@@ -4,11 +4,17 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import StudentForm from "../../components/StudentForm";
 import TeacherForm from "../../components/TeacherForm";
+import { useSession } from "next-auth/react";
 
 const page = () => {
   const [role, setRole] = useState("");
 
   const router = useRouter();
+  const session = useSession();
+
+  if (session.status === "authenticated") {
+    router.push("/feed");
+  }
   return (
     <>
       <div className="lg:m-10">
