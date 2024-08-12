@@ -1,5 +1,5 @@
 "use client";
-import { signIn, signOut } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -10,6 +10,11 @@ const page = () => {
   const [password, setPassword] = useState("");
 
   const router = useRouter();
+  const session = useSession();
+
+  if (session.status === "authenticated") {
+    router.push("/feed");
+  }
 
   return (
     <div className=" w-full flex justify-center items-center">
