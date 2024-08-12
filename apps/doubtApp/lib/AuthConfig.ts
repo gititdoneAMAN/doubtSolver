@@ -58,6 +58,7 @@ export const authConfig = {
                 name: existingUser.name,
                 role: "Teacher",
                 department: existingUser.depatment,
+                empId: existingUser.employeeId,
               };
             }
           }
@@ -72,6 +73,7 @@ export const authConfig = {
       if (user) {
         token.role = user.role;
         token.department = user.department;
+        token.identity = user.usn || user.empId;
       }
       return token;
     },
@@ -80,6 +82,7 @@ export const authConfig = {
         session.user.id = token.sub;
         session.user.role = token.role;
         session.user.department = token.department;
+        session.user.identity = token.identity;
         // console.log("Department", session.user.department);
       }
       return session;
